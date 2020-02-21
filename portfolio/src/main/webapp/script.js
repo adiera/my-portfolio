@@ -13,13 +13,13 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random fact to the page.
  */
-function addRandomGreeting() {
+function addRandomFact() {
   const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+      ['Real Madrid is my favorite soccer team!', 'I speak two languages!', 'I am a first generation college student!',];
 
-  // Pick a random greeting.
+  // Pick a random fact.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
 
   // Add it to the page.
