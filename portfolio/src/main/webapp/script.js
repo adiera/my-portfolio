@@ -26,3 +26,13 @@ function addRandomFact() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+/**
+* Adds the message from /data to index page
+ */
+function getMessageUsingArrowFunctions() {
+  fetch('/data').then(response => response.json()).then((data) => {
+  document.getElementById('data-container').innerText = data;
+
+  });
+}
