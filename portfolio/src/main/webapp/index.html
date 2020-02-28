@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <script src="script.js"></script>
   </head>
-  <body onload="getMessagesUsingArrowsFunctions()">
+  <body onload="getComments();">
     <div id="content">
       <h1>Alejandro Diera</h1>
       <img src="images/IMG_2.jpg" style="width:280px;height:350px">
@@ -45,22 +45,21 @@
       
       <br>
       
-      <div id="content">
-      <h1>Message</h1>
-      <p>Click here to get the message</p>
-      <button onclick="getMessages()">Fetch the message!</button>
-      <div id="data-container"></div>
-      </div>
-      
-      <ul id="history"></ul>
-      <h1 id="data-container"></h1>
+      <a id="comments">
+          <h1>Comments</h1>
+          <p>Current comments: 
+              </br>
+              <ul id="history"></ul>
+          </p>
 
-      <form action="/data" method="POST">
-      <p>Feel free to add a comment!</p>
-      <input type="text" name="text-input"></input>
-      <br/><br/>
-      <input type="submit" />
-      </form>   
+        <form action="/data" method="POST">
+            <p>Feel free to add a comment!</p>
+            <input type="text" name="user-input" maxlength="250">
+            <br/>
+            <input type="submit">
+
+        </form>
+      </a>
       
     </div>
   </body>

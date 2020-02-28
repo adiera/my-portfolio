@@ -28,16 +28,24 @@ function addRandomFact() {
 }
 
 /**
-* Adds the message from /data to index page
+* Fetches list of all comments
  */
-function getMessages() {
+function getComments() {
     fetch('/data').then(response => response.json()).then((data) => {
-    Message = document.getElementById('data-container');
-    });
+        
 
     // Build the list of history entries.
-    const historyEl = document.getElementById('history');
+    const commentHistory = document.getElementById('history');
     data.history.forEach((line) => {
-      historyEl.appendChild(createListElement(line));
+        console.log(data);
+        commentHistory.appendChild(createListElement(line));
     });
+  });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }

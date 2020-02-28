@@ -14,8 +14,10 @@
 
 package com.google.sps.servlets;
 
+
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import java.util.List;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,32 +28,36 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private ArrayList<String> messages;
-
+  private final List<String> comments = new ArrayList<>();
+  
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
-    String json = new Gson().toJson(messages);
+    String json = new Gson().toJson(comments);
     response.getWriter().println(json);
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
-    String text = getParameter(request, "text-input", "");
-    messages.add(text);
+    String text = getParameter(request,"user-input");
     
-    // Respond with the new message.
-    String json = new Gson().toJson(messages);
+    comments.add(text);
+    
+    //Stores new message in json format.
+    String json = new Gson().toJson(comments);
+    response.setContentType("application/json");
+    response.getWriter().println(json);
 
-    // Redirect back to the HTML page.
-    response.sendRedirect("/index.html");
+    //Redirect back to HTML page
+    //response.sendRedirect("/index.html");
+   
   }
 
-  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+private String getParameter(HttpServletRequest request, String name) {
     String value = request.getParameter(name);
-    if (value == null) {
-      return defaultValue;
+    if(value == null) {
+        return null;
     }
     return value;
   }
