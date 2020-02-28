@@ -30,9 +30,14 @@ function addRandomFact() {
 /**
 * Adds the message from /data to index page
  */
-function getMessageUsingArrowFunctions() {
-  fetch('/data').then(response => response.json()).then((data) => {
-  document.getElementById('data-container').innerText = data;
+function getMessages() {
+    fetch('/data').then(response => response.json()).then((data) => {
+    Message = document.getElementById('data-container');
+    });
 
-  });
+    // Build the list of history entries.
+    const historyEl = document.getElementById('history');
+    data.history.forEach((line) => {
+      historyEl.appendChild(createListElement(line));
+    });
 }

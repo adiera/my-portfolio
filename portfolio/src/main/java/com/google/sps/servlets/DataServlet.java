@@ -29,18 +29,30 @@ public class DataServlet extends HttpServlet {
   private ArrayList<String> messages;
 
   @Override
-  public void init() {
-    messages = new ArrayList<String>();
-    messages.add("Hello Alejandro Diera!");
-    messages.add("Greetings Visitor");
-    messages.add("This line was added on 2/27/2020");
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    response.setContentType("application/json");
+    String json = new Gson().toJson(messages);
+    response.getWriter().println(json);
   }
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String json = new Gson().toJson(messages);
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    String text = getParameter(request, "text-input", "");
+    messages.add(text);
     
-    response.setContentType("application/json;");
-    response.getWriter().println(json);
+    // Respond with the new message.
+    String json = new Gson().toJson(messages);
+
+    // Redirect back to the HTML page.
+    response.sendRedirect("/index.html");
+  }
+
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }
