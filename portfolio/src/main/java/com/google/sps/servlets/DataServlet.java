@@ -32,13 +32,16 @@ public class DataServlet extends HttpServlet {
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    
     response.setContentType("application/json");
     String json = new Gson().toJson(comments);
     response.getWriter().println(json);
+  
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    
     // Get the input from the form.
     String text = getParameter(request,"user-input");
     
@@ -50,15 +53,17 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(json);
 
     //Redirect back to HTML page
-    //response.sendRedirect("/index.html");
-   
+    response.sendRedirect("/index.html");
+
   }
 
 private String getParameter(HttpServletRequest request, String name) {
+    
     String value = request.getParameter(name);
     if(value == null) {
         return null;
     }
     return value;
   }
+
 }

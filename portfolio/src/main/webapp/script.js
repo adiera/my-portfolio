@@ -31,21 +31,24 @@ function addRandomFact() {
 * Fetches list of all comments
  */
 function getComments() {
+    
     fetch('/data').then(response => response.json()).then((data) => {
         
-
     // Build the list of history entries.
     const commentHistory = document.getElementById('history');
-    data.history.forEach((line) => {
-        console.log(data);
+    data.forEach((line) => {
+        console.log(line);
         commentHistory.appendChild(createListElement(line));
     });
   });
+
 }
 
 /** Creates an <li> element containing text. */
 function createListElement(text) {
+
   const liElement = document.createElement('li');
   liElement.innerText = text;
   return liElement;
+
 }
