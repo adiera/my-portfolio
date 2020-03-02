@@ -51,12 +51,6 @@ public class DataServlet extends HttpServlet {
     String text = getParameter(request,"user-input");    
     comments.add(text);
 
-    Entity taskEntity = new Entity("Task");
-    taskEntity.setProperty("comment", comment);
-    taskEntity.setProperty("date", date);
-
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(taskEntity);
 
     //Redirect back to HTML page
     response.sendRedirect("/index.html");
