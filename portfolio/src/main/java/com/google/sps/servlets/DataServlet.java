@@ -47,43 +47,47 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
+    List<String> orderedComments = new ArrayList<>();
     String languageCode = request.getParameter("languageCode");
-    List<Task> orderedComments = new ArrayList<>();
-
+    
     for (Entity entity : results.asIterable()) {
-      String comment = (String) entity.getProperty("comment");
-      long timestamp = (long) entity.getProperty("timestamp");
-      Task task = new Task(comment, timestamp,"en");
-      orderedComments.add(task);
+      String originalComment = (String) entity.getProperty("comment");
+      
+      // Do the translation.
+      Translate translate = TranslateOptions.getDefaultInstance().getService();
+      Translation translation = translate.translate(originalComment, Translate.TranslateOption.targetLanguage(languageCode));
+      String translatedComment = translation.getTranslatedText();
+      
+      orderedComments.add(translatedComment);
     }
     
+    response.setCharacterEncoding("UTF-8");
     response.setContentType("application/json");
-    String json = new Gson().toJson(messages);
+    String json = new Gson().toJson(orderedComments);
     response.getWriter().println(json);
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
-    String comment = getParameter(request,"user-input");    
+    String comment = request.getParameter("user-input");    
     long timestamp = System.currentTimeMillis();
-    messages.add(comment);
 
-    Entity taskEntity = new Entity("Comment");
-    taskEntity.setProperty("comment", comment);
-    taskEntity.setProperty("timestamp", timestamp);
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("comment", comment);
+    commentEntity.setProperty("timestamp", timestamp);
      
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(taskEntity);   
+    datastore.put(commentEntity);   
     
     //Redirect back to HTML page
     response.sendRedirect("/index.html");
   }
 
-private String getParameter(HttpServletRequest request, String name) {
+private String getParameter(HttpServletRequest request, String name, String defaultValue) {
     String value = request.getParameter(name);
     if(value == null) {
-        return null;
+        return defaultValue;
     }
     return value;
   }

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <script src="script.js"></script>
   </head>
-  <body onload="getComments();">
+  <body onload="getCommentList();">
     <div id="content">
       <h1>Alejandro Diera</h1>
       <img src="images/IMG_2.jpg" style="width:280px;height:350px">
@@ -43,28 +43,24 @@
       </div>
       
       <br>
-      
-      <a id="comments">
-          <h1>Comments</h1>
-          <p>Current comments: 
-              </br>
-              <ul id="history"></ul>
+
+      <div id="comment-container">
+          <h1>Comments:</h1>
+          <p></br>
+          <ul id="history"></ul>
           </p>
+          
+      <form action="/data" method="POST">
+        <p>Feel free to add a comment!</p>
+        <textarea name="user-input"></textarea>
+        <br/>
+        <br/>
+        <input type="submit">
+      </form>
+      </div>
 
-        <form action="/data" method="POST">
-            <p>Feel free to add a comment!</p>
-            <input type="text" name="user-input" maxlength="250">
-            <br/>
-            <input type="submit">
-
-        </form>
-      </a>
+      <p>Select a language to translate the comments here:</p>
       
-      <br>
-
-      <a id="data-cont">
-      <p>Translate the comments here:</p>
-
       <select id="languageCode">
         <option value ="en">English</option>
         <option value ="es">Spanish</option>
@@ -72,10 +68,10 @@
         <option value ="hi">Hindi</option>
         <option value ="ar">Arabic</option>
       </select>
+
       <button onclick="requestTranslation();">Translate</button>
-      </a>
-      
-      <br>
+    
+      </div>
     
     </div>
   </body>

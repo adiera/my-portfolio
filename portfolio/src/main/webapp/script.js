@@ -26,48 +26,45 @@ function addRandomFact() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+async function getDataUsingAsyncAwait() {
+    const response = await fetch('/data');
+    const quote = await response.text();
+    document.getElementById('comment-container').innerText = quote;
+}
 
 /**
 * Fetches list of all comments
  */
-function getComments() {
-    
-    fetch('/data').then(response => response.json()).then((data) => {
+function getCommentList() {
+    fetch('/data').then(response => response.json()).then((commentList) => {
         
     // Build the list of history entries.
-    const commentHistory = document.getElementById('history');
-    data.forEach((line) => {
-        console.log(line);
-        commentHistory.appendChild(createListElement(line));
+    const commentListElement = document.getElementById('comment-container');
+    commentList.forEach((line) => {
+        commentListElement.appendChild(createListElement(line));
     });
   });
-
 }
 
 /** Creates an <li> element containing text. */
 function createListElement(text) {
-
   const liElement = document.createElement('li');
   liElement.innerText = text;
   return liElement;
-
 }
 
 function requestTranslation() {
-        const dataCont = document.getElementById('data-cont');
-        const languageCode = document.getElementById('languageCode').value;   
+    const dataCont = document.getElementById('comment-container');
+    const languageCode = document.getElementById('languageCode').value;   
+    dataCont.innerText = '';
 
-        const params = new URLSearchParams();
-        params.append('languageCode', languageCode);
+    const params = new URLSearchParams();
+    params.append('languageCode', languageCode);
 
-        const params = new URLSearchParams();
-        params.append('text', text);
-        params.append('languageCode', languageCode);
-
-        fetch('/data' + params.toString()).then(response => response.json()).then((comList)=> {
-            const comListElement = document.getElementById('data-container');
-            comList.forEach(line) => {
-                comListElement.appendChild(createListElement));
-            });
+    fetch('/data?' + params.toString()).then(response => response.json()).then((data) => {
+        const dataListElement = document.getElementById('comment-container');
+        data.forEach((line) => {
+        dataListElement.appendChild(createListElement(line));
         });
-      }
+    });
+}
