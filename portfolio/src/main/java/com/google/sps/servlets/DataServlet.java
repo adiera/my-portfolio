@@ -14,6 +14,9 @@
 
 package com.google.sps.servlets;
 
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 import com.google.sps.data.Task;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -24,6 +27,7 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,13 +47,16 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
+    String languageCode = request.getParameter("languageCode");
     List<Task> orderedComments = new ArrayList<>();
+
     for (Entity entity : results.asIterable()) {
       String comment = (String) entity.getProperty("comment");
       long timestamp = (long) entity.getProperty("timestamp");
-      Task task = new Task(comment, timestamp);
+      Task task = new Task(comment, timestamp,"en");
       orderedComments.add(task);
     }
+    
     response.setContentType("application/json");
     String json = new Gson().toJson(messages);
     response.getWriter().println(json);

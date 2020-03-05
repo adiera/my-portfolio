@@ -52,3 +52,22 @@ function createListElement(text) {
   return liElement;
 
 }
+
+function requestTranslation() {
+        const dataCont = document.getElementById('data-cont');
+        const languageCode = document.getElementById('languageCode').value;   
+
+        const params = new URLSearchParams();
+        params.append('languageCode', languageCode);
+
+        const params = new URLSearchParams();
+        params.append('text', text);
+        params.append('languageCode', languageCode);
+
+        fetch('/data' + params.toString()).then(response => response.json()).then((comList)=> {
+            const comListElement = document.getElementById('data-container');
+            comList.forEach(line) => {
+                comListElement.appendChild(createListElement));
+            });
+        });
+      }
