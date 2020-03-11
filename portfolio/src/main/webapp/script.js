@@ -26,21 +26,23 @@ function addRandomFact() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
 async function getDataUsingAsyncAwait() {
     const response = await fetch('/data');
     const quote = await response.text();
-    document.getElementById('comment-container').innerText = quote;
+    document.getElementById('history').innerText = quote;
 }
 
 /**
 * Fetches list of all comments
  */
 function getCommentList() {
-    fetch('/data').then(response => response.json()).then((commentList) => {
+    fetch('/data').then(response => response.json()).then((data) => {
         
     // Build the list of history entries.
-    const commentListElement = document.getElementById('comment-container');
-    commentList.forEach((line) => {
+    const commentListElement = document.getElementById('history');
+    data.forEach((line) => {
+        console.log(line);
         commentListElement.appendChild(createListElement(line));
     });
   });
@@ -49,7 +51,7 @@ function getCommentList() {
 /** Creates an <li> element containing text. */
 function createListElement(text) {
   const liElement = document.createElement('li');
-  liElement.innerText = text;
+  liElement.innerText = text.comment;
   return liElement;
 }
 
