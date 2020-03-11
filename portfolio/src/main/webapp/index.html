@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getCommentList();">
     <div id="content">
       <h1>Alejandro Diera</h1>
       <img src="images/IMG_2.jpg" style="width:280px;height:350px">
@@ -22,8 +22,7 @@
       <p>I'm a second-year undergraduate studying computer engineering at the University of California, Santa Barbara. My hometown is Chico, CA but I'm currently residing in Santa Barbara for school.
           My hobbies include running, weightlifting, soccer, coding, painting, gaming, and traveling. I'm very passionate about technology and enjoy what I do.
           At UC Santa Barbara, I am apart of several organizations. I am an active member of Sigma Eta Pi, Hermanos Unidos, and Los Ingenieros. With Sigma Eta Pi, I was a part of an 8-week startup where I did several different technical and analytical tasks.
-      </p>
-      
+      </p> 
       <p>I've been a part of some projects, but I am attemping to partake in more. In the summer of 2019, I was a Cyber Risk Pioneer Intern at Deloitte and I on a team where I did some website development and we presented in front of PPMDs, managers, and other employees.
       </p>  
       
@@ -44,12 +43,34 @@
       </div>
       
       <br>
+
+      <a id="comment-container">
+          <h1>Comments:</h1>
+          <p>
+            </br>
+            <ul id="history"></ul>
+          </p>
+          
+        <form action="/data" method="POST">
+          <p>Feel free to add a comment!</p>
+          <textarea name="user-input"></textarea>
+          </br>
+          <input type="submit">
+        </form>
+      </a>
+
+      <p>Select a language to translate the comments here:</p>
       
-      <div id="content">
-      <h1>Message</h1>
-      <p>Click here to get the message</p>
-      <button onclick="getMessageUsingArrowFunctions()">Fetch the message!</button>
-      <div id="data-container"></div>
+      <select id="languageCode">
+        <option value ="en">English</option>
+        <option value ="es">Spanish</option>
+        <option value ="zh">Chinese</option>
+        <option value ="hi">Hindi</option>
+        <option value ="ar">Arabic</option>
+      </select>
+
+      <button onclick="requestTranslation();">Translate</button>
+    
       </div>
     
     </div>

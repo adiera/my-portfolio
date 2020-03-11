@@ -27,12 +27,46 @@ function addRandomFact() {
   greetingContainer.innerText = greeting;
 }
 
-/**
-* Adds the message from /data to index page
- */
-function getMessageUsingArrowFunctions() {
-  fetch('/data').then(response => response.json()).then((data) => {
-  document.getElementById('data-container').innerText = data;
+async function getDataUsingAsyncAwait() {
+    const response = await fetch('/data');
+    const quote = await response.text();
+    document.getElementById('history').innerText = quote;
+}
 
+/**
+* Fetches list of all comments
+ */
+function getCommentList() {
+    fetch('/data').then(response => response.json()).then((data) => {
+        
+    // Build the list of history entries.
+    const commentListElement = document.getElementById('history');
+    data.forEach((line) => {
+        console.log(line);
+        commentListElement.appendChild(createListElement(line));
+    });
   });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text.comment;
+  return liElement;
+}
+
+function requestTranslation() {
+    const dataCont = document.getElementById('comment-container');
+    const languageCode = document.getElementById('languageCode').value;   
+    dataCont.innerText = '';
+
+    const params = new URLSearchParams();
+    params.append('languageCode', languageCode);
+
+    fetch('/data?' + params.toString()).then(response => response.json()).then((data) => {
+        const dataListElement = document.getElementById('comment-container');
+        data.forEach((line) => {
+        dataListElement.appendChild(createListElement(line));
+        });
+    });
 }
